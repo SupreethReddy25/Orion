@@ -13,7 +13,7 @@ import os
 NUM_SAMPLES = 5000
 OCCLUSION_PERCENT = 0.5 # 50% occlusion
 MODEL_ID = "openai/clip-vit-base-patch32"
-DATASET_ID = "merve/coco_karpathy_test"
+DATASET_ID = "yerevann/coco-karpathy"
 RESULTS_FILE = "baseline_results.txt" # We will save our results to a file
 
 # --- 2. Setup Helper Function ---
@@ -115,7 +115,7 @@ def run_baseline():
     # Pre-calculate text features
     print(f"\nCalculating text features for {len(dataset)} captions...")
     # Get the *first* caption for each image
-    captions = [sample['caption'][0] for sample in dataset] 
+    captions = [sample['sentences_raw'][0] for sample in dataset]
     
     text_inputs = processor(
         text=captions,
