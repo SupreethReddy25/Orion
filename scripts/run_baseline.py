@@ -115,7 +115,7 @@ def run_baseline():
     # Pre-calculate text features
     print(f"\nCalculating text features for {len(dataset)} captions...")
     # Get the *first* caption for each image
-    captions = [sample['sentences_raw'][0] for sample in dataset]
+    captions = [sample['sentences'][0] for sample in dataset]
     
     text_inputs = processor(
         text=captions,
