@@ -12,7 +12,7 @@ from io import BytesIO
 
 # --- 1. Configuration ---
 
-NUM_SAMPLES = 5000
+NUM_SAMPLES = 1500
 OCCLUSION_PERCENT = 0.5 # 50% occlusion
 MODEL_ID = "openai/clip-vit-base-patch32"
 DATASET_ID = "yerevann/coco-karpathy"
