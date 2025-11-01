@@ -99,7 +99,7 @@ def run_baseline():
     model.eval() # Set model to evaluation mode (no gradients)
 
     # Load dataset
-    print(f"Loading dataset (caching to {DATASET_CACHE_DIR})...")
+    print("Loading dataset...")
     try:
         # Use the Karpathy Test split
         dataset = load_dataset(DATASET_ID, split='test')
