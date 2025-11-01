@@ -7,6 +7,8 @@ import random
 from tqdm import tqdm
 import sys
 import os
+import requests
+from io import BytesIO  
 
 # --- 1. Configuration ---
 
@@ -133,21 +135,34 @@ def run_baseline():
     occluded_image_features = []
     
     for item in tqdm(dataset, desc="Processing images"):
-        image = item['image']
-        occluded_image = add_occlusion(image, OCCLUSION_PERCENT)
-        
-        if occluded_image is None:
-            continue # Skip if image was problematic
+        image_url = item['url']
 
-        # Process both images in one batch
+        try:
+            # Download the image from the URL with a 5-second timeout
+            response = requests.get(image_url, timeout=5)
+            response.raise_for_status() # Raise an error for bad responses (404, 500, etc.)
+
+            # Open the image from the downloaded bytes
+            image = Image.open(BytesIO(response.content))
+
+        except Exception as e:
+            # This handles dead URLs, network errors, or corrupt images
+            print(f"Warning: Failed to download/open image at {image_url}. Skipping. Error: {e}", file=sys.stderr)
+            continue
+        # --- The rest of the script is the same ---
+        occluded_image = add_occlusion(image, OCCLUSION_PERCENT)
+        if occluded_image is None:
+            continue # Skip if occlusion failed for some reason
+
+        # Process both images
         inputs = processor(
             images=[image, occluded_image],
             return_tensors="pt"
         ).to(device)
-        
+
         with torch.no_grad():
             features = model.get_image_features(**inputs)
-            
+
         clean_image_features.append(features[0])
         occluded_image_features.append(features[1])
 
