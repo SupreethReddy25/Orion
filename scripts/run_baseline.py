@@ -14,7 +14,6 @@ NUM_SAMPLES = 5000
 OCCLUSION_PERCENT = 0.5 # 50% occlusion
 MODEL_ID = "openai/clip-vit-base-patch32"
 DATASET_ID = "merve/coco_karpathy_test"
-DATASET_CACHE_DIR = "./data_cache" # Store the dataset locally
 RESULTS_FILE = "baseline_results.txt" # We will save our results to a file
 
 # --- 2. Setup Helper Function ---
@@ -101,10 +100,9 @@ def run_baseline():
 
     # Load dataset
     print(f"Loading dataset (caching to {DATASET_CACHE_DIR})...")
-    os.makedirs(DATASET_CACHE_DIR, exist_ok=True)
     try:
         # Use the Karpathy Test split
-        dataset = load_dataset(DATASET_ID, split='test', cache_dir=DATASET_CACHE_DIR)
+        dataset = load_dataset(DATASET_ID, split='test')
         if NUM_SAMPLES < len(dataset):
              dataset = dataset.select(range(NUM_SAMPLES))
         print(f"Loaded {len(dataset)} samples.")
