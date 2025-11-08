@@ -1,7 +1,8 @@
 import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
-from transformers import CLIPProcessor, CLIPModel, AdamW, get_linear_schedule_with_warmup
+from transformers import CLIPProcessor, CLIPModel, get_linear_schedule_with_warmup
+from torch.optim import AdamW
 from datasets import load_dataset
 from tqdm.notebook import tqdm
 import os
@@ -24,7 +25,7 @@ except ImportError as e:
 
 # --- 2. Configuration (All in one place) ---
 # --- Training Hyperparameters ---
-EPOCHS = 3                # How many times to loop over the data
+EPOCHS = 2                # How many times to loop over the data
 BATCH_SIZE = 32           # How many samples per step
 LEARNING_RATE = 1e-6      # Very low, as we are fine-tuning
 LAMBDA_CONST = 0.5        # The weight for our 'consistency_loss' (0.5 means 50%)
@@ -33,7 +34,7 @@ WARMUP_STEPS = 100        # How many steps to "warm up" the learning rate
 # --- Data & Model Configuration ---
 MODEL_ID = "openai/clip-vit-base-patch32"
 DATASET_ID = "yerevann/coco-karpathy"
-TRAIN_SAMPLES = 25000     # How many samples to train on (25k is a solid number)
+TRAIN_SAMPLES = 10000     # How many samples to train on (25k is a solid number)
 
 # --- Save Configuration ---
 MODEL_SAVE_PATH = "./models/orion_clip_final" # Where to save the final model
