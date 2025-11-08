@@ -205,3 +205,19 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Executables and Installers
+*.exe
+*.msi
+*.pkg
+*.dll
+
+# macOS and Windows junk
+.DS_Store
+Thumbs.db
+
+# Common test/copy files
+* - Copy.jpg
+* - copy.jpg
+* - Copy.png
+* - copy.png
