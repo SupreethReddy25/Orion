@@ -34,7 +34,7 @@ WARMUP_STEPS = 100        # How many steps to "warm up" the learning rate
 # --- Data & Model Configuration ---
 MODEL_ID = "openai/clip-vit-base-patch32"
 DATASET_ID = "yerevann/coco-karpathy"
-TRAIN_SAMPLES = 10000     # How many samples to train on (25k is a solid number)
+TRAIN_SAMPLES = 25000     # How many samples to train on (25k is a solid number)
 
 # --- Save Configuration ---
 MODEL_SAVE_PATH = "./models/orion_clip_final" # Where to save the final model
